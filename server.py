@@ -13,6 +13,9 @@ AWESOMENESS = [
     'oh-so-not-meh', 'brilliant', 'ducky', 'coolio', 'incredible',
     'wonderful', 'smashing', 'lovely']
 
+INSULTS = [
+    'smell-bad', 'noisy', 'annoying', 'dumb']
+
 
 @app.route("/")
 def start_here():
@@ -46,15 +49,43 @@ def say_hello():
         <h1>Hi There!</h1>
         <form action="/greet">
           What's your name? <input type="text" name="person">
-          <input type="submit" value="Submit">
           <input type = "radio" name="compliments" value="awesome">Awesome</input>
           <input type = "radio" name="compliments" value="terrific">Terrific</input>
           <input type = "radio" name="compliments" value="fantastic">Fantastic</input>
+          <input type="submit" value="Submit">
+        </form>
+        <form action="/diss"> 
+        What's your name? <input type="text" name="person">
+        <select name = "insults">
+            <option value = "smell-bad">Smells Bad</option>
+            <option value = "noisy">Noisy</option>
+            <option value = "annoying">Annoying</option>
+            <option value = "dumb">Dumb</option>
+        </select>
+        <input type="submit" value="Submit">
         </form>
       </body>
     </html>
     """
+@app.route("/diss")
+def insult_person():
+    """Greet person with insult"""
 
+    player = request.args.get("person")
+
+    insult = request.args.get("insults")
+
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>An Insult</title>
+      </head>
+      <body>
+        Hi, {}! I think you're {}!
+      </body>
+    </html>
+    """.format(player, insult)
 
 @app.route("/greet")
 def greet_person():
@@ -64,7 +95,6 @@ def greet_person():
 
     compliment = request.args.get("compliments")
 
-    y = x 
 
     return """
     <!doctype html>
@@ -77,6 +107,10 @@ def greet_person():
       </body>
     </html>
     """.format(player, compliment)
+
+
+
+
 
 
 if __name__ == "__main__":
